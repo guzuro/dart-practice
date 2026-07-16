@@ -1,25 +1,7 @@
 import 'dart:io';
 
+import 'package:simple_calculator/calculator.dart';
 import 'package:simple_calculator/operation_model.dart';
-
-num calculate(String action, num a, num b) {
-  switch (action) {
-    case "+":
-      return a + b;
-    case "-":
-      return a - b;
-    case "/":
-      if (b == 0) {
-        throw "Деление на ноль невозможно";
-      }
-
-      return a / b;
-    case "*":
-      return a * b;
-    default:
-      throw "Неизвестное действие - $action";
-  }
-}
 
 num readValue(String prompt) {
   while (true) {
@@ -62,7 +44,7 @@ void calculator() {
     history.add(operation);
     print(operation.toString());
   } catch (e) {
-    print("Ошибка: $e");
+    print(e.toString());
   }
 }
 
