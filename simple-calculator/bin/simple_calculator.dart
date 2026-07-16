@@ -1,6 +1,9 @@
 import 'dart:io';
 
-num resolveAction(String action, num a, num b) {
+import 'package:simple_calculator/calculator_state.dart';
+import 'package:simple_calculator/operation_model.dart';
+
+num calculate(String action, num a, num b) {
   switch (action) {
     case "+":
       return a + b;
@@ -34,8 +37,10 @@ num readValue(String prompt) {
 }
 
 const actions = ['+', '-', '/', '*'];
+final CalculatorState state = CalculatorState.calc;
+final List<OperationModel> history = [];
 
-void main(List<String> arguments) {
+void calculator() {
   num a = readValue("Введите первое число:");
 
   String? action;
@@ -53,9 +58,36 @@ void main(List<String> arguments) {
   num b = readValue("Введите второе число:");
 
   try {
-    final result = resolveAction(action, a, b);
-    print("$a $action $b = $result");
+    final result = calculate(action, a, b);
+    final operation = OperationModel(a, b, action, result);
+
+    history.add(operation);
+    print(operation.toString());
   } catch (e) {
     print("Ошибка: $e");
+  }
+}
+
+void showHistory() {
+  history.forEach(print);
+}
+
+void main(List<String> arguments) {
+  while (true) {
+    print("Что будем делать дальше (calc, history)?");
+    String input = stdin.readLineSync() ?? "";
+
+    try {
+      final nextState = CalculatorState.values.byName(input);
+
+      switch (nextState) {
+        case CalculatorState.calc:
+          calculator();
+        case CalculatorState.history:
+          showHistory();
+      }
+    } on ArgumentError catch (e) {
+      print("не верное значение ${e.invalidValue}");
+    }
   }
 }

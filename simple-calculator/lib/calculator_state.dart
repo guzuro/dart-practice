@@ -1,0 +1,1 @@
+enum CalculatorState { calc, history }
