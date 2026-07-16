@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:simple_calculator/calculator_state.dart';
 import 'package:simple_calculator/operation_model.dart';
 
 num calculate(String action, num a, num b) {
@@ -37,7 +36,6 @@ num readValue(String prompt) {
 }
 
 const actions = ['+', '-', '/', '*'];
-final CalculatorState state = CalculatorState.calc;
 final List<OperationModel> history = [];
 
 void calculator() {
@@ -74,20 +72,14 @@ void showHistory() {
 
 void main(List<String> arguments) {
   while (true) {
-    print("Что будем делать дальше (calc, history)?");
+    print("Что будем делать дальше? \n 1.Калькулятор \n 2.История");
     String input = stdin.readLineSync() ?? "";
 
-    try {
-      final nextState = CalculatorState.values.byName(input);
-
-      switch (nextState) {
-        case CalculatorState.calc:
-          calculator();
-        case CalculatorState.history:
-          showHistory();
-      }
-    } on ArgumentError catch (e) {
-      print("не верное значение ${e.invalidValue}");
+    switch (input) {
+      case '1':
+        calculator();
+      case "2":
+        showHistory();
     }
   }
 }
