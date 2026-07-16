@@ -1,6 +1,6 @@
 import 'dart:io';
 
-num resolveAction(String action, int a, int b) {
+num resolveAction(String action, num a, num b) {
   switch (action) {
     case "+":
       return a + b;
@@ -19,36 +19,41 @@ num resolveAction(String action, int a, int b) {
   }
 }
 
-void main(List<String> arguments) {
-  int? a;
-  String? action;
-  int? b;
+num readValue(String prompt) {
+  while (true) {
+    print(prompt);
+    final input = stdin.readLineSync() ?? "";
+    final value = num.tryParse(input);
 
-  while (a == null) {
-    print('Введите первое число');
-    String input = stdin.readLineSync() ?? "";
-    a = int.tryParse(input);
+    if (value != null) {
+      return value;
+    }
+
+    print('ошибка: Введите число');
   }
+}
 
+const actions = ['+', '-', '/', '*'];
+
+void main(List<String> arguments) {
+  num a = readValue("Введите первое число:");
+
+  String? action;
   while (action == null) {
-    print('Введите действие');
+    print('Введите действие:');
     String input = stdin.readLineSync() ?? "";
 
-    if (['+', '-', '/', '*'].contains(input)) {
+    if (actions.contains(input)) {
       action = input;
     } else {
-      print("Введите одно из действий +,-,/,*");
+      print("ошибка: Введите одно из действий $actions");
     }
   }
 
-  while (b == null) {
-    print('Введите второе число');
-    String input = stdin.readLineSync() ?? "";
-    b = int.tryParse(input);
-  }
+  num b = readValue("Введите второе число:");
 
   try {
-    var result = resolveAction(action, a, b);
+    final result = resolveAction(action, a, b);
     print("$a $action $b = $result");
   } catch (e) {
     print("Ошибка: $e");
