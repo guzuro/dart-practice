@@ -16,8 +16,7 @@ void addBookController() {
 
   library.addBook(author: author, title: title);
 
-  print("👌 Книга добавлена");
-  print("_______");
+  print("👌 Книга добавлена\n_________");
 }
 
 void showBooksController() {
@@ -58,6 +57,17 @@ void findBookController() {
   print("_______");
 }
 
+void deleteBookController() {
+  String id = readString("Введите ID книги:");
+  final result = library.deleteBook(id);
+
+  if (result) {
+    print("👌 Книга удалена\n___________");
+  } else {
+    print("Такой книги не существует\n___________");
+  }
+}
+
 void main(List<String> arguments) {
   while (true) {
     print(
@@ -73,6 +83,10 @@ void main(List<String> arguments) {
         showBooksController();
       case "3":
         findBookController();
+      case "4":
+        deleteBookController();
+      case "5":
+        return;
       default:
         print('Неизвестная команда');
     }
