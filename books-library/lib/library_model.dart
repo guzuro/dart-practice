@@ -10,8 +10,8 @@ class Library {
     _store.add(BookModel(getNextBookId(), author, title));
   }
 
-  bool deleteBook(String id) {
-    final bookIndex = _store.indexWhere((book) => book.id == int.tryParse(id));
+  bool deleteBook(int id) {
+    final bookIndex = _store.indexWhere((book) => book.id == id);
 
     if (bookIndex != -1) {
       _store.removeAt(bookIndex);
@@ -29,8 +29,8 @@ class Library {
     );
   }
 
-  BookModel? getBookById(String id) {
-    return _store.firstWhereOrNull((book) => book.id == int.tryParse(id));
+  BookModel? getBookById(int id) {
+    return _store.firstWhereOrNull((book) => book.id == id);
   }
 
   int getNextBookId() {

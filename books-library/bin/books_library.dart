@@ -1,4 +1,3 @@
-import 'package:books_library/book_model.dart';
 import 'package:books_library/library_model.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -8,6 +7,20 @@ final library = Library();
 String readString(String prompt) {
   print(prompt);
   return stdin.readLineSync(encoding: utf8) ?? "";
+}
+
+int readValue(String prompt) {
+  while (true) {
+    print(prompt);
+    final input = stdin.readLineSync() ?? "";
+    final value = int.tryParse(input);
+
+    if (value != null) {
+      return value;
+    }
+
+    print('ошибка: Введите число');
+  }
 }
 
 void addBookController() {
@@ -41,7 +54,8 @@ void findBookController() {
       }
       break;
     case "2":
-      String id = readString("Введите ID книги:");
+      int id = readValue("Введите ID книги:");
+
       final book = library.getBookById(id);
 
       if (book != null) {
@@ -58,7 +72,8 @@ void findBookController() {
 }
 
 void deleteBookController() {
-  String id = readString("Введите ID книги:");
+  int id = readValue("Введите ID книги:");
+
   final result = library.deleteBook(id);
 
   if (result) {
