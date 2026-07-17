@@ -1,5 +1,5 @@
 class BookModel {
-  final String id;
+  final int id;
   final String title;
   final String author;
 
@@ -7,6 +7,6 @@ class BookModel {
 
   @override
   String toString() {
-    return "Название: $title, автор: $author";
+    return "$id | Название: $title | Автор: $author";
   }
 }

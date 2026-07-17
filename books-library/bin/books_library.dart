@@ -1,6 +1,5 @@
 import 'package:books_library/book_model.dart';
 import 'package:books_library/library_model.dart';
-import 'package:uuid/uuid.dart';
 import 'dart:io';
 import 'dart:convert';
 
@@ -15,13 +14,48 @@ void addBookController() {
   String title = readString("Название книги:");
   String author = readString("Автор книги:");
 
-  library.addBook(BookModel(Uuid().v1(), author, title));
+  library.addBook(author: author, title: title);
+
   print("👌 Книга добавлена");
   print("_______");
 }
 
 void showBooksController() {
   library.store.forEach(print);
+}
+
+void findBookController() {
+  String method = readString(
+    "Как будем искать книгу? \n 1.По названию. \n2.По ID.",
+  );
+
+  switch (method) {
+    case "1":
+      String title = readString("Введите азвание книги:");
+      final books = library.getBookByTitle(title);
+
+      if (books.isNotEmpty) {
+        print("Найденные книги:");
+        books.forEach(print);
+      } else {
+        print("Книги с таким названием не найдены");
+      }
+      break;
+    case "2":
+      String id = readString("Введите ID книги:");
+      final book = library.getBookById(id);
+
+      if (book != null) {
+        print(book);
+      } else {
+        print("Книгa с таким ID не найдена");
+      }
+      break;
+    default:
+      print("Команда не найдена");
+  }
+
+  print("_______");
 }
 
 void main(List<String> arguments) {
@@ -37,6 +71,8 @@ void main(List<String> arguments) {
         addBookController();
       case "2":
         showBooksController();
+      case "3":
+        findBookController();
       default:
         print('Неизвестная команда');
     }
