@@ -11,8 +11,7 @@ String readString(String prompt) {
 
 int readValue(String prompt) {
   while (true) {
-    print(prompt);
-    final input = stdin.readLineSync() ?? "";
+    final input = readString(prompt);
     final value = int.tryParse(input);
 
     if (value != null) {
