@@ -22,8 +22,6 @@ Future<GithubUser> getGithubUser(String username) async {
 
       return GithubUser.fromJson(jsonData);
     } else {
-      print(response.statusCode);
-      print(response.body);
       throw Exception(response);
     }
   } on FormatException {
