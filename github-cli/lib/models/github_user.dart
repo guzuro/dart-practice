@@ -42,7 +42,6 @@ class GithubUser {
   }
 
   factory GithubUser.fromJson(Map<String, dynamic> json) {
-    print(json);
     return GithubUser(
       login: json['login'] as String,
       name: json['name'] as String?,
