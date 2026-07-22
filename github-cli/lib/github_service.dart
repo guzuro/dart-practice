@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dartpedia_cli/github_user.dart';
+import 'package:dartpedia_cli/models/github_user.dart';
 import 'package:http/http.dart' as http;
 
 Future<GithubUser> getGithubUser(String username) async {
